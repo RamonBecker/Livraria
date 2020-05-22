@@ -1,0 +1,15 @@
+{% load bootstrap %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row justify-content-md-center h-200">
+        <form method="POST" action="{% url 'cadastrarEndereco' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% csrf_token %}
+            {{ form|crispy }}
+        </form>
+</div>
+
+{% endblock %}

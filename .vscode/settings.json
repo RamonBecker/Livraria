@@ -1,0 +1,4 @@
+{
+    "python.linting.pylintUseMinimalCheckers": false,
+    "python.linting.pylintEnabled": false
+}

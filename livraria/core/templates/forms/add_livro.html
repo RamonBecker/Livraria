@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+   <div class="row justify-content-md-center h-200">
+      <h2>Cadastrar Livro</h2>
+   </div>
+    <div class="row justify-content-md-center h-200">
+        <form method="POST" action="{% url 'cadastrarProduto' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if not editoras %}
+
+              <span onsubmit="clickTest()"></span>
+                
+            {% else %}
+                
+            {% endif %}  
+            <!-- {{ form|bootstrap }} 
+            -->
+           
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+</div>
+
+{% endblock %}
