@@ -23,10 +23,12 @@ def cadastrarProduto(request):
         
     context = {
         'form': form,
-        'editoras': Editora.objects.all()
+        'editoras': Editora.objects.all().values()
     }
 
-    print(len(context.get('editoras')) == 0)
+    print(context.get('editoras'))
+
+    #print(len(context.get('editoras')) == 0)
     return render(request, 'forms/add_livro.html', context)
 
 @login_required
@@ -34,22 +36,13 @@ def cadastrarEditora(request):
     aux_Editora_form = EditoraForm(request.POST or None)
     aux_Endereco_form = EnderecoForm(request.POST or None)
 
+    invalid_Form = False
+
     if str(request.method) == 'POST':
         if aux_Editora_form.is_valid():
             if aux_Endereco_form.is_valid():
-                '''
-                editora = aux_Editora_form.save(commit=false)
-                editora.endereco = aux_Endereco_form.save()
-                aux_Editora_form.save()    
-                messages.success(request, 'Produto salvo com sucesso')
-                aux_Endereco_form = EnderecoForm()
-                aux_Editora_form = EditoraForm()
-                '''
-               # aux_Editora_form.cleaned_data
-                #aux_Endereco_form.cleaned_data
-              #  print(aux_Editora_form.cleaned_data)
-                print(aux_Endereco_form.cleaned_data)
 
+                print(aux_Endereco_form.cleaned_data)
                 rua = aux_Endereco_form.cleaned_data['rua']
                 bairro = aux_Endereco_form.cleaned_data['bairro']
                 cidade = aux_Endereco_form.cleaned_data['cidade']
@@ -60,12 +53,21 @@ def cadastrarEditora(request):
                 endereco,created = Endereco.objects.get_or_create(rua=rua, bairro=bairro, cidade=cidade, estado=estado, numero=numero)
                 editora, created = Editora.objects.get_or_create(nome=nomeEditora, endereco=endereco)
                 editora.save()
-                print('Endereço:',endereco)
-                print('Editora:', editora)
+                messages.success(request,'Editora cadastrada com sucesso !')
+            else:
+                invalid_Form = True
+        else:
+            invalid_Form = True
+    else:
+        invalid_Form = True
+
+    if invalid_Form :
+        messages.error(request,'Erro ao cadastrar editora !')
+
                 
-                aux_Editora_form = EditoraForm()
-                aux_Endereco_form = EnderecoForm()
-                
+    aux_Editora_form = EditoraForm()
+    aux_Endereco_form = EnderecoForm()
+
     context = {
          'editoraForm':aux_Editora_form,
          'enderecoForm': aux_Endereco_form,
