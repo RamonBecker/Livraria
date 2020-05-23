@@ -14,15 +14,17 @@
         <form method="POST" action="{% url 'cadastrarProduto' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">
             <input type="hidden" name="next" value="{{ next }}" />
             {% csrf_token %}
-            {{ form|crispy }}
-            {% if not editoras %}
 
+            {{ form|crispy }}
+            {{formAutor|crispy}}
+          
+  <!--
+            {% if not editoras %}
               <span onsubmit="clickTest()"></span>
-                
             {% else %}
                 
             {% endif %}  
-            <!-- {{ form|bootstrap }} 
+           {{ form|bootstrap }} 
             -->
            
                 <button type="submit" class="btn btn-primary">Cadastrar</button>

@@ -9,39 +9,56 @@
 
    <div class="row justify-content-md-center h-200">
       <h2>Cadastrar Editora</h2>
-   </div>
+    </div>
  
 
    <form method="POST" action="{% url 'cadastrarEditora' %}" autocomplete="off">
     {% csrf_token %}
-   
+    <div class="row justify-content-md-center h-200">
 
         <div class="form-group col-md-4">
             {{ editoraForm.nome|as_crispy_field }}
         </div>
-    
+    </div>
+
+    <div class="row justify-content-md-center h-200">
         <div class="form-group col-md-4">
             {{ enderecoForm.rua|as_crispy_field }}
         </div>
+    </div>
+
+    <div class="row justify-content-md-center h-200">
         <div class="form-group col-md-4 mb-0">
             {{ enderecoForm.bairro|as_crispy_field }}
         </div>
+    </div>
+
+    <div class="row justify-content-md-center h-200">
         <div class="form-group col-md-4 mb-0">
             {{ enderecoForm.estado|as_crispy_field }}
         </div>
+    </div>
+
+    <div class="row justify-content-md-center h-200">
         <div class="form-group col-md-4 mb-0">
             {{ enderecoForm.cidade|as_crispy_field }}
         </div>
-        <div class="form-group col-md-2 mb-0">
+    </div>
+
+    <div class="row justify-content-md-center h-200">
+        <div class="form-group col-md-4 mb-0">
             {{ enderecoForm.numero|as_crispy_field }}
         </div>
+    </div>
 
-    <div class="form-group col-md-4">
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <div class="row justify-content-md-center h-200">
+        <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </div>
     </div>
 
     </form>
-    
+
 <!-- 
     <div class="row justify-content-md-center h-200">
         <form method="POST" action="{% url 'cadastrarEditora' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">

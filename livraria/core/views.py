@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import messages
-from .forms import LivroForm, EditoraForm, EnderecoForm
+from .forms import LivroForm, EditoraForm, EnderecoForm, AutorForm
 from .models import Editora, Endereco
 
 @login_required
@@ -13,22 +13,18 @@ def base(request):
 # Funções para realizar cadastros
 @login_required
 def cadastrarProduto(request):
-    form = LivroForm(request.POST or None)
-    formEditora = EditoraForm(request.POST or None)
 
-    if str(request.method) == "POST":
-        if form.is_valid():
-            if formEditora.is_valid():
-               pass  
+    form = LivroForm(request.POST or None)
+    form_Autor = AutorForm(request.POST or None)
+  #  formEditora = EditoraForm(request.POST or None)
+ 
         
     context = {
         'form': form,
-        'editoras': Editora.objects.all().values()
+        'formAutor': form_Autor
     }
 
-    print(context.get('editoras'))
 
-    #print(len(context.get('editoras')) == 0)
     return render(request, 'forms/add_livro.html', context)
 
 @login_required
