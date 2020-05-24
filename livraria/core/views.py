@@ -66,6 +66,7 @@ def cadastrarProduto(request):
 
 @login_required
 def cadastrarEditora(request):
+
     aux_Editora_form = EditoraForm(request.POST or None)
     aux_Endereco_form = EnderecoForm(request.POST or None)
 
@@ -107,3 +108,9 @@ def cadastrarEditora(request):
     }
 
     return render(request, 'forms/add_editora.html', context)
+
+
+# Mostrar listagem de objetos
+@login_required
+def exibir_produtos(request):
+    return render(request,'my_products.html')
