@@ -15,6 +15,9 @@ class Autor(models.Model):
     nome = models.CharField('Nome do autor', max_length=200)
     data_nascimento = models.DateField('Data de nascimento do autor', blank=True)
 
+    def __str__(self):
+        return "'{}'-'{}'".format(self.nome,self.data_nascimento)
+
 
 class Livro(Produto):
     autor = models.ForeignKey('Autor', on_delete=models.CASCADE, related_name='autor')
@@ -45,3 +48,4 @@ class Endereco(models.Model):
     
     def __str__(self):
         return "'{}'-'{}'-'{} - {} - {}'".format(self.rua, self.bairro, self.cidade, self.estado,self.numero)
+        

@@ -48,6 +48,8 @@ class Migration(migrations.Migration):
                 ('endereco', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='endereco', to='core.Endereco')),
             ],
         ),
+
+        
         migrations.CreateModel(
             name='Livro',
             fields=[

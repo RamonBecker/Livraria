@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import messages
 from .forms import LivroForm, EditoraForm, EnderecoForm, AutorForm
-from .models import Editora, Endereco
+from .models import Editora, Endereco, Autor, Livro
 
 @login_required
 def base(request):
@@ -14,16 +14,53 @@ def base(request):
 @login_required
 def cadastrarProduto(request):
 
-    form = LivroForm(request.POST or None)
+    form_Livro = LivroForm(request.POST or None)
     form_Autor = AutorForm(request.POST or None)
   #  formEditora = EditoraForm(request.POST or None)
  
-        
+    if str(request.method) == 'POST':
+        if form_Livro.is_valid():
+            if form_Autor.is_valid():
+                #Pegando dados do formulário de Livro
+                
+                nomeLivro = form_Livro.cleaned_data['nome']
+                preco = form_Livro.cleaned_data['preco']
+                estoque = form_Livro.cleaned_data['estoque']
+                edicao = form_Livro.cleaned_data['edicao']
+                genero = form_Livro.cleaned_data['genero']
+                num_paginas = form_Livro.cleaned_data['num_paginas']
+                descricao = form_Livro.cleaned_data['descricao']
+                anoLivro = form_Livro.cleaned_data['ano']
+            
+                #Buscando editora selecionada
+
+                #print(form_Livro.cleaned_data['descricao'])
+
+                idEditora = form_Livro.cleaned_data['editora']
+                editora = Editora.objects.get(id=idEditora)
+
+                #Pegando dados do formulario do autor
+                nomeAutor = form_Autor.cleaned_data['nome']
+                data_nascimento = form_Autor.cleaned_data['ano']
+
+                #Pegando autor do bd, se não encontrar cria um autor
+                autor,created = Autor.objects.get_or_create(nome=nomeAutor, data_nascimento=data_nascimento)
+
+                #Pega o livro do bd, se não encontrar cria um livro novo
+                livro, created = Livro.objects.get_or_create(nome=nomeLivro,preco=preco,estoque=estoque,edicao=edicao,genero=genero,num_paginas=num_paginas,descricao=descricao, ano=anoLivro, autor=autor,editora=editora)
+  
+
+                livro.save()
+                messages.success(request,'Livro cadastrado com sucesso !')
+
+
+    form_Livro = LivroForm()
+    form_Autor = AutorForm()
     context = {
-        'form': form,
+        'formLivro': form_Livro,
         'formAutor': form_Autor
     }
-
+    
 
     return render(request, 'forms/add_livro.html', context)
 

@@ -11,7 +11,7 @@ class LivroForm(forms.ModelForm):
     descricao = forms.CharField(widget=forms.Textarea())
     class Meta:
         model = Livro
-        fields = ('nome', 'preco', 'estoque','edicao','num_paginas')
+        fields = ('nome', 'preco','estoque','genero','edicao','num_paginas')
 
 class EditoraForm(forms.ModelForm):
     class Meta:

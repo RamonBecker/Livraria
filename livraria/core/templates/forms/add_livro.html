@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load bootstrap %}
 {% load crispy_forms_tags %}
 {% load static %}
 
@@ -15,7 +14,7 @@
             <input type="hidden" name="next" value="{{ next }}" />
             {% csrf_token %}
 
-            {{ form|crispy }}
+            {{ formLivro|crispy }}
             {{formAutor|crispy}}
           
   <!--
@@ -24,7 +23,6 @@
             {% else %}
                 
             {% endif %}  
-           {{ form|bootstrap }} 
             -->
            
                 <button type="submit" class="btn btn-primary">Cadastrar</button>

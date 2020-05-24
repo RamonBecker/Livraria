@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load bootstrap %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 	<section class="h-200">
 		<div class="container h-200">
@@ -10,7 +10,7 @@
 								 <input type="hidden" name="next" value="{{ next }}" />
 								{% csrf_token %}
 
-								{{ form|bootstrap }}
+								{{ form|crispy }}
 
 								<button type="submit" class="btn btn-dark btn-lg">Login</button>
 							</form>
