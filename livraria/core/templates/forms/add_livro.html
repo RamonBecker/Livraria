@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% load static %}
-
-
 {% block content %}
 
 
@@ -16,7 +13,15 @@
 
             {{ formLivro|crispy }}
             {{formAutor|crispy}}
+
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" name="check" id="defaultChecked2" onclick="alert1()">
+              <label class="custom-control-label" for="defaultChecked2">Default unchecked</label>
+          </div>      
           
+          <div id="termo">
+          <input type="optional" id="op1"/>  
+          </div>
   <!--
             {% if not editoras %}
               <span onsubmit="clickTest()"></span>
@@ -24,8 +29,9 @@
                 
             {% endif %}  
             -->
-           
+          
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
+        
         </form>
 </div>
 

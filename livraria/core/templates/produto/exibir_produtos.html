@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Meus livros cadastrados</h1>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Preço unitário</th>
+                <th scope="col">Quantidade em estoque</th>
+                <th scope="col" id="PrecoTotal">Preço total</th>
+                <th scope="col">Exibir detalhes</th>
+            </tr>
+        </thead>
+        
+       
+        <tbody>
+            {% for livro in livros %}
+                
+                    {% ifchanged %}
+            <tr>
+                <td scope="row">{{ livro.nome }}</td>
+                <td scope="row">{{ livro.preco }}</td>
+                <td scope="row">{{ livro.estoque }}</td>
+                <td scope="row">{{ livro.preco_total }}</td>
+                <input type="hidden" id="id">{{livro.id}}</input>
+               
+                <td scope="row" class="material-icons">
+                <a href="{% url 'detalheLivro' livro.id %}" >open_in_new</a>
+                </td>
+             
+                    {% endifchanged %}
+                {% endfor %}
+                </tr> 
+        </tbody>
+
+    </table>
+
+
+</div>
+{% endblock %}

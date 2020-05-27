@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import messages
+
 from .forms import LivroForm, EditoraForm, EnderecoForm, AutorForm
-from .models import Editora, Endereco, Autor, Livro
+from .models import Editora, Endereco, Autor, Livro, Categoria
+
 
 @login_required
 def base(request):
@@ -13,7 +15,7 @@ def base(request):
 # Funções para realizar cadastros
 @login_required
 def cadastrarProduto(request):
-
+    print(request.POST.get('vehicle1'))
     form_Livro = LivroForm(request.POST or None)
     form_Autor = AutorForm(request.POST or None)
   #  formEditora = EditoraForm(request.POST or None)
@@ -27,7 +29,7 @@ def cadastrarProduto(request):
                 preco = form_Livro.cleaned_data['preco']
                 estoque = form_Livro.cleaned_data['estoque']
                 edicao = form_Livro.cleaned_data['edicao']
-                genero = form_Livro.cleaned_data['genero']
+                nome_categoria = form_Livro.cleaned_data['categorias']
                 num_paginas = form_Livro.cleaned_data['num_paginas']
                 descricao = form_Livro.cleaned_data['descricao']
                 anoLivro = form_Livro.cleaned_data['ano']
@@ -42,14 +44,18 @@ def cadastrarProduto(request):
                 #Pegando dados do formulario do autor
                 nomeAutor = form_Autor.cleaned_data['nome']
                 data_nascimento = form_Autor.cleaned_data['ano']
+                
+                #Pegando categoria do bd, se não encontrar cria uma nova categoria
+
+                categoria,created =  Categoria.objects.get_or_create(nome=nome_categoria)              
 
                 #Pegando autor do bd, se não encontrar cria um autor
                 autor,created = Autor.objects.get_or_create(nome=nomeAutor, data_nascimento=data_nascimento)
 
                 #Pega o livro do bd, se não encontrar cria um livro novo
-                livro, created = Livro.objects.get_or_create(nome=nomeLivro,preco=preco,estoque=estoque,edicao=edicao,genero=genero,num_paginas=num_paginas,descricao=descricao, ano=anoLivro, autor=autor,editora=editora)
-  
-
+                livro, created = Livro.objects.get_or_create(nome=nomeLivro,preco=preco,estoque=estoque,edicao=edicao,num_paginas=num_paginas,descricao=descricao, ano=anoLivro, autor=autor,editora=editora, categoria=categoria)
+            
+                livro.preco_total = estoque * preco
                 livro.save()
                 messages.success(request,'Livro cadastrado com sucesso !')
 
@@ -112,5 +118,28 @@ def cadastrarEditora(request):
 
 # Mostrar listagem de objetos
 @login_required
-def exibir_produtos(request):
-    return render(request,'my_products.html')
+def exibir_livros(request):
+
+    list_Livros = Livro.objects.all().values()
+
+    list_preco_total = []
+
+    print(list_preco_total)
+    context= {
+        'livros': Livro.objects.all(),
+        'livros_preco_total':list_preco_total
+    }
+
+    return render(request,'produto/exibir_produtos.html',context)
+
+
+@login_required
+def detalhe_livro(request, pk):
+
+    livro = get_object_or_404(Livro,id=pk)
+
+    context = {
+        'livro':livro,
+    }
+
+    return render(request,'produto/detalhe_produto.html', context)

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Editora, Endereco, Autor, Livro
+
+from .models import Editora, Endereco, Autor, Livro, Categoria
 
 @admin.register(Autor)
 class AutorAdmin(admin.ModelAdmin):
@@ -11,4 +12,4 @@ class EnderecoAdmin(admin.ModelAdmin):
 
 @admin.register(Livro)
 class Livro(admin.ModelAdmin):
-    list_display = ('nome','preco','estoque','autor','editora','descricao','num_paginas','ano','edicao','genero')
+    list_display = ('nome','preco','estoque','autor','editora','descricao','num_paginas','ano','edicao', 'categoria')

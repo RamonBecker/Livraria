@@ -6,7 +6,7 @@ class Produto(models.Model):
     nome = models.CharField('Nome', max_length=100)
     preco = models.DecimalField('Preco', max_digits=8, decimal_places=2)
     estoque = models.IntegerField('Estoque', default=0)
-
+    preco_total = models.DecimalField('Preco Total', max_digits=8, decimal_places=2, default=0)
     def __str__(self):
         return "'{}-{}-{}'".format(self.nome, self.preco, self.estoque)
 
@@ -23,10 +23,11 @@ class Livro(Produto):
     autor = models.ForeignKey('Autor', on_delete=models.CASCADE, related_name='autor')
     edicao = models.IntegerField('Edicao', default=1)
     ano = models.DateField('Ano', blank=True)
-    genero = models.CharField('Genero', max_length=100)
+    #genero = models.CharField('Genero', max_length=100)
     num_paginas = models.IntegerField('Numero de paginas', default=0)
     descricao = models.CharField('Descricao', max_length=300)
     editora = models.ForeignKey('Editora', on_delete=models.CASCADE, related_name='editora')
+    categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE, related_name='categoria',default='')
 
     def __str__(self):
         return "'{}'-'{}'-'{} - {}'".format(self.autor, self.edicao, self.ano, self.editora.nome)
@@ -48,4 +49,6 @@ class Endereco(models.Model):
     
     def __str__(self):
         return "'{}'-'{}'-'{} - {} - {}'".format(self.rua, self.bairro, self.cidade, self.estado,self.numero)
-        
+
+class Categoria(models.Model):
+    nome = models.CharField('Nome', max_length=200)

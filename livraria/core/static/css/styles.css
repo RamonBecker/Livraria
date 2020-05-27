@@ -15,3 +15,21 @@ body{
 
 }
 
+#termo:disabled{
+   /*display:none; mantem a div escondida no inicio da página */
+   visibility: hidden;
+  }
+
+
+#containerDetalheProduto {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+#boxDetalheProduto{
+    width: 300px;
+    height: 300px;
+  }
