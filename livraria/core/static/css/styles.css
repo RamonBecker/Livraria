@@ -23,13 +23,17 @@ body{
 
 #containerDetalheProduto {
     width: 100vw;
-    height: 100vh;
+    height: 150vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center
 }
 #boxDetalheProduto{
-    width: 300px;
-    height: 300px;
+    width: 800px;
+    height: 800px;
   }
+
+#textoCard{
+  color:#000000 ;
+}

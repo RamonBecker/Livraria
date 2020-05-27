@@ -6,7 +6,7 @@ from django.contrib import admin
 
 
 from .views import base, cadastrarProduto, cadastrarEditora
-from .views import exibir_livros, detalhe_livro 
+from .views import exibir_livros, detalhe_livro , editar_livro
 
 urlpatterns = [
     path('', base, name='base'),
@@ -19,6 +19,9 @@ urlpatterns = [
     path('exibirLivros/', exibir_livros,name='exibirLivros'),
 
     #Detalhes do produto
-    path('detalheLivro/<int:pk>', detalhe_livro,name='detalheLivro')
+    path('detalheLivro/<int:pk>', detalhe_livro,name='detalheLivro'),
+
+    #Editar produto
+    path('editarLivro/<int:pk>',editar_livro, name='editarLivro')
     
 ]

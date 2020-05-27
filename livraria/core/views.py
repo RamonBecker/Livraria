@@ -19,13 +19,16 @@ def cadastrarProduto(request):
     form_Livro = LivroForm(request.POST or None)
     form_Autor = AutorForm(request.POST or None)
   #  formEditora = EditoraForm(request.POST or None)
- 
+    
     if str(request.method) == 'POST':
         if form_Livro.is_valid():
             if form_Autor.is_valid():
+                print(form_Livro.cleaned_data)
+                print(form_Autor.cleaned_data)
                 #Pegando dados do formulário de Livro
                 
                 nomeLivro = form_Livro.cleaned_data['nome']
+                print(nomeLivro)
                 preco = form_Livro.cleaned_data['preco']
                 estoque = form_Livro.cleaned_data['estoque']
                 edicao = form_Livro.cleaned_data['edicao']
@@ -42,7 +45,7 @@ def cadastrarProduto(request):
                 editora = Editora.objects.get(id=idEditora)
 
                 #Pegando dados do formulario do autor
-                nomeAutor = form_Autor.cleaned_data['nome']
+                nomeAutor = form_Autor.cleaned_data['nomeAutor']
                 data_nascimento = form_Autor.cleaned_data['ano']
                 
                 #Pegando categoria do bd, se não encontrar cria uma nova categoria
@@ -54,14 +57,13 @@ def cadastrarProduto(request):
 
                 #Pega o livro do bd, se não encontrar cria um livro novo
                 livro, created = Livro.objects.get_or_create(nome=nomeLivro,preco=preco,estoque=estoque,edicao=edicao,num_paginas=num_paginas,descricao=descricao, ano=anoLivro, autor=autor,editora=editora, categoria=categoria)
-            
                 livro.preco_total = estoque * preco
                 livro.save()
-                messages.success(request,'Livro cadastrado com sucesso !')
+                #messages.success(request,'Livro cadastrado com sucesso !')
+            
 
-
-    form_Livro = LivroForm()
-    form_Autor = AutorForm()
+    #form_Livro = LivroForm()
+    #form_Autor = AutorForm()
     context = {
         'formLivro': form_Livro,
         'formAutor': form_Autor
@@ -81,8 +83,6 @@ def cadastrarEditora(request):
     if str(request.method) == 'POST':
         if aux_Editora_form.is_valid():
             if aux_Endereco_form.is_valid():
-
-                print(aux_Endereco_form.cleaned_data)
                 rua = aux_Endereco_form.cleaned_data['rua']
                 bairro = aux_Endereco_form.cleaned_data['bairro']
                 cidade = aux_Endereco_form.cleaned_data['cidade']
@@ -123,8 +123,6 @@ def exibir_livros(request):
     list_Livros = Livro.objects.all().values()
 
     list_preco_total = []
-
-    print(list_preco_total)
     context= {
         'livros': Livro.objects.all(),
         'livros_preco_total':list_preco_total
@@ -143,3 +141,57 @@ def detalhe_livro(request, pk):
     }
 
     return render(request,'produto/detalhe_produto.html', context)
+
+@login_required
+def editar_livro(request,pk):
+
+    livro = get_object_or_404(Livro, pk=pk)
+    
+    formLivro = LivroForm(request.POST or None)
+    formAutor = AutorForm(request.POST or None)
+
+    if str(request.method) == 'POST':
+        formLivro = LivroForm(request.POST, instance=livro)
+        if formLivro.is_valid():
+            if formAutor.is_valid():
+                #livro = formLivro.save(commit=False)
+ 
+                livro = formLivro.save(commit=False)
+                livro.nome = formLivro.cleaned_data['nome']
+                livro.preco = formLivro.cleaned_data['preco']
+                livro.estoque = formLivro.cleaned_data['estoque']
+                livro.num_paginas = formLivro.cleaned_data['num_paginas']
+                livro.edicao = formLivro.cleaned_data['edicao']
+                livro.descricao = formLivro.cleaned_data['descricao']
+                livro.ano = formLivro.cleaned_data['ano']
+
+                nomeAutor = formAutor.cleaned_data['nomeAutor']
+                data_nascimento = formAutor.cleaned_data['ano']
+
+                nomeCategoria = formLivro.cleaned_data['categorias']
+
+                autor,created = Autor.objects.get_or_create(nome=nomeAutor, data_nascimento=data_nascimento)
+                categoria, created = Categoria.objects.get_or_create(nome=nomeCategoria)
+                
+                livro.autor = autor
+                livro.categoria = categoria
+                livro.save()
+                
+                return redirect('exibirLivros')
+    else:
+        formLivro = LivroForm(instance=livro) 
+        formAutor = AutorForm()
+
+    context = {
+        'formLivro':formLivro,
+        'formAutor': formAutor,
+    }
+
+    return render(request,'forms/editar_produto.html',context)
+
+
+@login_required
+def deletar_livro(request, pk):
+    livro = get_object_or_404(Livro, pk=pk)
+    livro.delete()
+    return redirect('exibirLivros')

@@ -25,7 +25,6 @@ class LivroForm(forms.ModelForm):
     descricao = forms.CharField(widget=forms.Textarea())
     categorias = forms.ChoiceField(choices=CATEGORIAS_LIVROS)
 
-
    # categoria_nao_encontrada = forms.BooleanField(required=False, label='Não encontrei minha categoria')
     class Meta:
         model = Livro
@@ -41,8 +40,10 @@ class EnderecoForm(forms.ModelForm):
         model = Endereco
         fields = ('rua','bairro','cidade','estado','numero')
 
-class AutorForm(forms.ModelForm):
-    ano = forms.DateField(widget=DateInput)
-    class Meta:
-        model = Autor
-        fields = ('nome',)
+class AutorForm(forms.Form):
+   
+    nomeAutor = forms.CharField(max_length=100,label='Nome do autor')
+    ano = forms.DateField(widget=DateInput,label='Ano de nascimento do autor')
+  #  class Meta:
+     #   model = Autor
+      #  fields = ('nome',)

@@ -10,27 +10,11 @@
         <form method="POST" action="{% url 'cadastrarProduto' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">
             <input type="hidden" name="next" value="{{ next }}" />
             {% csrf_token %}
-
             {{ formLivro|crispy }}
-            {{formAutor|crispy}}
-
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" name="check" id="defaultChecked2" onclick="alert1()">
-              <label class="custom-control-label" for="defaultChecked2">Default unchecked</label>
-          </div>      
-          
-          <div id="termo">
-          <input type="optional" id="op1"/>  
-          </div>
-  <!--
-            {% if not editoras %}
-              <span onsubmit="clickTest()"></span>
-            {% else %}
-                
-            {% endif %}  
-            -->
-          
-                <button type="submit" class="btn btn-primary">Cadastrar</button>
+           
+            {{ formAutor|crispy }}   
+                 
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
         
         </form>
 </div>
