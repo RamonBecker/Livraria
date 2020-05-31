@@ -13,6 +13,11 @@ from .forms import Livro_Emprestimo_Form, EmprestimoForm
 
 import math 
 from decimal import Decimal
+
+#Variaveis globais
+val_block = True
+emprestimo_save = None
+
 @login_required
 def base(request):
 
@@ -213,8 +218,7 @@ def deletar_livro(request, pk):
     return redirect('exibirLivros')
 
 
-val_block = True
-emprestimo_save = None
+
 
 @login_required
 def realizar_emprestimo(request, pk):
@@ -273,3 +277,15 @@ def realizar_emprestimo(request, pk):
     }
     
     return render(request, 'forms/emprestimo_livro.html', context)
+
+@login_required
+def devolver_livro(request, pk):
+
+    emprestimo = get_object_or_404(EmprestimoLivro, pk=pk)
+    livro = emprestimo.livro
+    emprestimo.ativo = False
+    livro.estoque = livro.estoque + emprestimo.quantidade
+    emprestimo.quantidade = 0
+    livro.save()
+    emprestimo.save()
+    return redirect('exibirLivros')

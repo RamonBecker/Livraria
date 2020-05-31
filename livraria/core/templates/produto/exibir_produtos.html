@@ -27,8 +27,10 @@
                 <td scope="row">{{ livro.preco }}</td>
                 <td scope="row">{{ livro.estoque }}</td>
                 <td scope="row">{{ livro.preco_total }}</td>
-                <input type="hidden" id="id">{{livro.id}}</input>
-               
+                
+                <td id="id"> 
+                <input type="hidden" >{{livro.id}}</input>
+                </td>   
                 <td scope="row" class="material-icons">
                 <a href="{% url 'detalheLivro' livro.id %}" >open_in_new</a>
                 </td>
@@ -67,6 +69,9 @@
                         <td scope="row">{{ emprestimo.data_devolucao|date:'d-m-Y'}}</td>
                         <td scope="row">{{ emprestimo.preco }}</td>
                         <td scope="row">{{ emprestimo.quantidade }}</td>
+                        <td id="id"> 
+                            <input type="hidden" id="id">{{emprestimo.id}}</input>
+                        </td>
                         {% if emprestimo.ativo %}
                             <td scope="row">Ativo</td>
                         {% elif not emprestimo.ativo %}
@@ -74,7 +79,7 @@
                         {% endif %}
                     {% endifchanged %}
                     <td scope="row" class="material-icons">
-                        <a href="#">add box</a>
+                        <a href="{% url 'devolverLivro' emprestimo.id %}">add box</a>
                     </td>
                 
                 {% endfor %}

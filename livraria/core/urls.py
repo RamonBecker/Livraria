@@ -6,7 +6,7 @@ from django.contrib import admin
 #View
 from .views import base, cadastrarProduto, cadastrarEditora
 from .views import exibir_livros, detalhe_livro , editar_livro, deletar_livro
-from .views import realizar_emprestimo
+from .views import realizar_emprestimo,devolver_livro
 
 urlpatterns = [
     path('', base, name='base'),
@@ -28,5 +28,9 @@ urlpatterns = [
     path('deletarLivro/<int:pk>', deletar_livro, name='deletarLivro'),
 
     #Realizar emprestimo
-    path('emprestimoLivro/<int:pk>', realizar_emprestimo, name='emprestimoLivro')
+    path('emprestimoLivro/<int:pk>', realizar_emprestimo, name='emprestimoLivro'),
+
+    #Devolver Livro
+    path('devolverLivro/<int:pk>',devolver_livro, name='devolverLivro')
+
 ]
