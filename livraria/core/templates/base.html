@@ -35,9 +35,7 @@
                     <div class="dropdown-menu">
                         <a href="{% url 'cadastrarProduto' %}" class="dropdown-item">Cadastrar Produto</a>
                         <a href="{% url 'cadastrarEditora' %}" class="dropdown-item">Cadastrar Editora</a>
-                        <a href="{% url 'exibirLivros' %}" class="dropdown-item">Meus Livros</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#"class="dropdown-item">Trash</a>
+                        <a href="{% url 'exibirLivros' %}" class="dropdown-item">Meus Livros e empréstimos</a>
                     </div>
                 </li>
             {% if user.is_authenticated %}
@@ -72,9 +70,9 @@
 
     {% block content %}
     {% endblock %}
-
-
 </body>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script type="text/javascript" src="{% static 'js/javascript.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

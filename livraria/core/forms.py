@@ -1,6 +1,7 @@
 from django import forms
-from core.models import Livro, Editora, Endereco, Autor
-
+from core.models import Livro, Editora, Endereco, Autor, EmprestimoLivro
+from django.utils import timezone
+from datetime import date
 
 CATEGORIAS_LIVROS = [
     ('','Selecione'),
@@ -44,6 +45,17 @@ class AutorForm(forms.Form):
    
     nomeAutor = forms.CharField(max_length=100,label='Nome do autor')
     ano = forms.DateField(widget=DateInput,label='Ano de nascimento do autor')
-  #  class Meta:
-     #   model = Autor
-      #  fields = ('nome',)
+
+class EmprestimoForm(forms.Form):
+    data_inicial = forms.DateField(label='Data de início',disabled=True,initial=timezone.now)
+    data_devolucao = forms.DateField(label='Data de devolução',widget=DateInput)
+    quantidade = forms.IntegerField(label='Quantidade a ser emprestada', initial=0)
+    preco = forms.DecimalField(label='Preco a pagar pelo emprestimo',decimal_places=2,disabled=True, initial=0)
+  
+class Livro_Emprestimo_Form(forms.ModelForm):
+    nome = forms.CharField(required=True,max_length=100)
+    class Meta:
+        model = Livro
+        fields = ('nome',)
+
+

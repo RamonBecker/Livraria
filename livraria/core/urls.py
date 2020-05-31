@@ -2,11 +2,11 @@ from django.urls import path, include
 from django.contrib.auth import views
 from django.contrib import admin
 
-#Cadastros
 
-
+#View
 from .views import base, cadastrarProduto, cadastrarEditora
-from .views import exibir_livros, detalhe_livro , editar_livro
+from .views import exibir_livros, detalhe_livro , editar_livro, deletar_livro
+from .views import realizar_emprestimo
 
 urlpatterns = [
     path('', base, name='base'),
@@ -15,13 +15,18 @@ urlpatterns = [
     path('cadastrarProduto/', cadastrarProduto, name='cadastrarProduto'),
     path('cadastrarEditora/', cadastrarEditora, name='cadastrarEditora'),
 
-    #Exibição de produtos cadastrados
+    #Exibição de livros cadastrados
     path('exibirLivros/', exibir_livros,name='exibirLivros'),
 
-    #Detalhes do produto
+    #Detalhes do livros
     path('detalheLivro/<int:pk>', detalhe_livro,name='detalheLivro'),
 
-    #Editar produto
-    path('editarLivro/<int:pk>',editar_livro, name='editarLivro')
-    
+    #Editar livors
+    path('editarLivro/<int:pk>',editar_livro, name='editarLivro'),
+
+    #Deletar livro
+    path('deletarLivro/<int:pk>', deletar_livro, name='deletarLivro'),
+
+    #Realizar emprestimo
+    path('emprestimoLivro/<int:pk>', realizar_emprestimo, name='emprestimoLivro')
 ]

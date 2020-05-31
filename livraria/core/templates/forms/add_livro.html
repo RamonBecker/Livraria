@@ -7,14 +7,26 @@
       <h2>Cadastrar Livro</h2>
    </div>
     <div class="row justify-content-md-center h-200">
+
+
+
         <form method="POST" action="{% url 'cadastrarProduto' %}" class="form-group mb-4 w-50 p3"   autocomplete="off">
+
+        {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-danger" role="alert">
+            <strong>Aviso !</strong> {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
             <input type="hidden" name="next" value="{{ next }}" />
             {% csrf_token %}
             {{ formLivro|crispy }}
-           
             {{ formAutor|crispy }}   
                  
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+            <button type="submit" class="btn btn-primary btn-lg">Cadastrar</button>
         
         </form>
 </div>

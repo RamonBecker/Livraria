@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.utils import timezone
 
 
 
@@ -23,7 +26,6 @@ class Livro(Produto):
     autor = models.ForeignKey('Autor', on_delete=models.CASCADE, related_name='autor')
     edicao = models.IntegerField('Edicao', default=1)
     ano = models.DateField('Ano', blank=True)
-    #genero = models.CharField('Genero', max_length=100)
     num_paginas = models.IntegerField('Numero de paginas', default=0)
     descricao = models.CharField('Descricao', max_length=300)
     editora = models.ForeignKey('Editora', on_delete=models.CASCADE, related_name='editora')
@@ -52,3 +54,16 @@ class Endereco(models.Model):
 
 class Categoria(models.Model):
     nome = models.CharField('Nome', max_length=200)
+
+
+class EmprestimoLivro(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    livro = models.ForeignKey('Livro',on_delete=models.CASCADE, related_name='livro')
+    data_inicial = models.DateTimeField(blank=True)
+    data_devolucao = models.DateField(blank=True)
+    preco = models.DecimalField('Preco', max_digits=8, decimal_places=2)
+    ativo = models.BooleanField(default=False)
+    quantidade = models.IntegerField('Quantidade', default=0)
+
+    def __str__(self):
+        return "'{}'-{}-{}-{}-{}-{}-{}".format(self.user, self.livro, self.data_inicial, self.data_devolucao, self.preco, self.ativo, self.quantidade)
