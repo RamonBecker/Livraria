@@ -54,6 +54,7 @@
                 <th scope="col">Preço do empréstimo</th>
                 <th scope="col">Quantidade</th>
                 <th scope="col">Status</th>
+                <th scope="col">Devolver livro</th>
             </tr>
         </thead>
 
@@ -61,8 +62,6 @@
             {% for emprestimo in emprestimos %}
                  {% ifchanged %}
             <tr>
-              
-                   
                         <td scope="row">{{ emprestimo.livro.nome}}</td>
                         <td scope="row">{{ emprestimo.data_inicial|date:'d-m-Y'}}</td>
                         <td scope="row">{{ emprestimo.data_devolucao|date:'d-m-Y'}}</td>
@@ -74,6 +73,10 @@
                             <td scope="row">Devolvido</td>
                         {% endif %}
                     {% endifchanged %}
+                    <td scope="row" class="material-icons">
+                        <a href="#">add box</a>
+                    </td>
+                
                 {% endfor %}
             </tr>
            

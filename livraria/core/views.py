@@ -246,6 +246,7 @@ def realizar_emprestimo(request, pk):
                 livro.save()
                 emprestimo_save = None
                 val_block = True
+                return redirect('exibirLivros')
             else:
                 calculo_Inicial_Emprestimo = Decimal(diferenca_data.days / 100)
                 arrendondamento_calculo_emprestimo = round(calculo_Inicial_Emprestimo,2)
