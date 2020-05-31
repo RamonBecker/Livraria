@@ -77,13 +77,7 @@ def cadastrarProduto(request):
             messages.success(request,'Livro cadastrado com sucesso !')
             form_Livro = LivroForm()
             form_Autor = AutorForm()
-        else :
-            invalid_Form = True
-
-
-    if invalid_Form:
-        messages.error(request,'Erro no formulário !')
-    
+            
 
     messages.warning(request,'Atenção, voce precisa cadastrar pelo menos uma editora para cadastrar o livro')
 
@@ -117,16 +111,7 @@ def cadastrarEditora(request):
             editora, created = Editora.objects.get_or_create(nome=nomeEditora, endereco=endereco)
             editora.save()
             messages.success(request,'Editora cadastrada com sucesso !')
-           
-        else:
-            invalid_Form = True
-    else:
-        invalid_Form = True
-
-    if invalid_Form :
-        messages.error(request,'Erro ao cadastrar editora !')
-
-                
+                    
     aux_Editora_form = EditoraForm()
     aux_Endereco_form = EnderecoForm()
 
@@ -193,7 +178,7 @@ def editar_livro(request,pk):
 
             autor,created = Autor.objects.get_or_create(nome=nomeAutor, data_nascimento=data_nascimento)
             categoria, created = Categoria.objects.get_or_create(nome=nomeCategoria)
-                
+            livro.preco_total = livro.estoque * livro.preco
             livro.autor = autor
             livro.categoria = categoria
             livro.save()
@@ -239,7 +224,11 @@ def realizar_emprestimo(request, pk):
             form_emprestimo.cleaned_data.get('preco')
             diferenca_data = data_devolucao - data_inicial
 
-            if quantidade > livro.estoque:
+
+            if quantidade == 0:
+                messages.error(request,'A quantidade não pode ser zero')
+
+            elif quantidade > livro.estoque:
                 messages.error(request,'A quantidade a ser emprestada, não pode ser maior que o estoque do livro')
 
             elif diferenca_data.days < 0:

@@ -12,6 +12,20 @@
  
 
    <form method="POST" action="{% url 'cadastrarEditora' %}" autocomplete="off">
+
+    <div class="row justify-content-md-center h-200">
+        <div class="form-group col-md-4">
+        {% if messages %}
+        {% for message in messages %}
+    
+        <div class="alert alert-danger" role="alert">
+            <strong>Aviso !</strong> {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+    </div>
+
     {% csrf_token %}
     <div class="row justify-content-md-center h-200">
 
