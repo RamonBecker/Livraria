@@ -4,10 +4,10 @@ Site desenvolvido utilizando o Framework Django para a disciplina de programaç�
 
 * No site da livraria foi desenvolvido as seguintes funcionalidades:
 
-1 - Cadastrar livro\n
-2 - Cadastrar Editora
-3 - Cadastrar Autor do livro
-4 - Editar as informações do livro
-5 - Excluir um livro
-6 - Realizar empréstimo de livro
-7 - Devolução de empréstimo de livro
+* 1 - Cadastrar livro
+* 2 - Cadastrar Editora
+* 3 - Cadastrar Autor do livro
+* 4 - Editar as informações do livro
+* 5 - Excluir um livro
+* 6 - Realizar empréstimo de livro
+* 7 - Devolução de empréstimo de livro
